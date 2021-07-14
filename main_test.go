@@ -32,7 +32,6 @@ func TestF1(t *testing.T) {
 		mu.Lock()
 		mu.Unlock()
 		mu.Lock()
-		mu.Unlock()
 
 		go func() {
 			mu.Lock()
