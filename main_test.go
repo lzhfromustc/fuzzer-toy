@@ -11,11 +11,17 @@ func TestF1(t *testing.T) {
 	go func() {
 		time.Sleep(100 * time.Millisecond)
 		ch <- 1
+		ch <- 2
+		ch <- 3
+		ch <- 4
 	}()
 	select {
 	case <-ch:
 	case <-time.After(300 * time.Millisecond):
 	}
+	<-ch
+	<-ch
+	<-ch
 
 	select {
 	case <-time.After(300 * time.Millisecond):
@@ -24,8 +30,13 @@ func TestF1(t *testing.T) {
 		// Test other primitive
 		mu := sync.Mutex{}
 		mu.Lock()
+		mu.Unlock()
+		mu.Lock()
+		mu.Unlock()
 
 		go func() {
+			mu.Lock()
+			mu.Unlock()
 			mu.Lock()
 		}()
 	}
